@@ -25,3 +25,20 @@ exports.create = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.fetchAll = async (req, res, next) => {
+  try {
+    const cars = await Car.find();
+    if (!cars) {
+      const error = new Error('Cars Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Cars Fetched', cars });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
