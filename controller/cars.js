@@ -43,6 +43,38 @@ exports.fetchAll = async (req, res, next) => {
   }
 };
 
+exports.update = async (req, res, next) => {
+  try {
+    const carId = req.params.id;
+    const carName = req.body.carName;
+    const segment = req.body.segment;
+    const brand = req.body.brand;
+
+    const existingCar = await Car.findById(carId);
+    if (!existingCar) {
+      const error = new Error('Car Not Found');
+      error.status = 422;
+      throw error;
+    }
+    existingCar.name = carName;
+    existingCar.segment = segment;
+    existingCar.brand = brand;
+
+    const updatedCar = await existingCar.save();
+    if (!updatedCar) {
+      const error = new Error('Car Not Updated');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Car Updated', car: updatedCar });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
+
 exports.deleteById = async (req, res, next) => {
   try {
     const carId = req.params.id;
