@@ -42,3 +42,22 @@ exports.fetchAll = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteById = async (req, res, next) => {
+  try {
+    const carId = req.params.id;
+
+    const car = await Car.findByIdAndRemove(carId);
+    if (!car) {
+      const error = new Error('Car Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'car Deleted' });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
