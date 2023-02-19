@@ -8,4 +8,6 @@ router.get('', carController.fetchAll);
 
 router.delete('/:id', carController.deleteById);
 
+router.delete('', carController.deleteAll);
+
 module.exports = router;

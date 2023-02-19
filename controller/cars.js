@@ -61,3 +61,20 @@ exports.deleteById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteAll = async (req, res, next) => {
+  try {
+    const deleteAll = await Car.deleteMany();
+    if (!deleteAll) {
+      const error = new Error('Car Not Deleted');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Cars Deleted' });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
