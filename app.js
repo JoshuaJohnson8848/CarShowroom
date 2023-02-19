@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -21,6 +22,10 @@ app.use((req, res, next) => {
 });
 
 dotenv.config({ path: './config/.env' });
+
+const adminRouter = require('./routes/admin');
+
+app.use('', adminRouter);
 
 app.use((error, req, res, next) => {
   const data = error.data;
