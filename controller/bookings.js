@@ -80,3 +80,22 @@ exports.status = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.fetchById = async (req, res, next) => {
+  try {
+    const bookingId = req.params.id;
+
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      const error = new Error('Booking Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Booking Fetched', booking });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};

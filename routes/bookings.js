@@ -8,4 +8,6 @@ router.get('/', bookController.fetchAll);
 
 router.put('/:id', bookController.status);
 
+router.get('/:id', bookController.fetchById);
+
 module.exports = router;
