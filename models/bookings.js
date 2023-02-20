@@ -18,6 +18,7 @@ const bookingSchema = new Schema({
   car: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'Car',
   },
   status: {
     type: String,
