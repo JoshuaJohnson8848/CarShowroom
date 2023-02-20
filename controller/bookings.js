@@ -99,3 +99,31 @@ exports.fetchById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.filter = async (req, res, next) => {
+  try {
+    const location = req.body.location;
+    const date = req.body.date;
+
+    const filteredBookings = await Booking.find({
+      location: location,
+      date: date,
+    })
+      .populate('car')
+      .exec();
+
+    if (!filteredBookings) {
+      const error = new Error('Bookings Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res
+      .status(200)
+      .json({ message: 'Bookings Filtered', bookings: filteredBookings });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};

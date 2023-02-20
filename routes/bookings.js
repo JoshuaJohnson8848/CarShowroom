@@ -10,4 +10,6 @@ router.put('/:id', bookController.status);
 
 router.get('/:id', bookController.fetchById);
 
+router.post('/', bookController.filter);
+
 module.exports = router;
