@@ -34,3 +34,20 @@ exports.book = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.fetchAll = async (req, res, next) => {
+  try {
+    const bookings = await Booking.find();
+    if (!bookings) {
+      const error = new Error('Bookings Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Bookings Fetched', bookings });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
