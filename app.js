@@ -25,9 +25,11 @@ dotenv.config({ path: './config/.env' });
 
 const adminRouter = require('./routes/admin');
 const carRouter = require('./routes/cars');
+const bookRouter = require('.//routes/bookings');
 
 app.use('', adminRouter);
 app.use('/cars', carRouter);
+app.use('/book', bookRouter);
 
 app.use((error, req, res, next) => {
   const data = error.data;
