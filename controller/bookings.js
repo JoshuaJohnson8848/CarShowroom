@@ -37,7 +37,7 @@ exports.book = async (req, res, next) => {
 
 exports.fetchAll = async (req, res, next) => {
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find().populate('car').exec();
     if (!bookings) {
       const error = new Error('Bookings Not Found');
       error.status = 422;
