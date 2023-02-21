@@ -6,6 +6,8 @@ router.post('', carController.create);
 
 router.get('', carController.fetchAll);
 
+router.get('/:id', carController.fetchById);
+
 router.put('/:id', carController.update);
 
 router.delete('/:id', carController.deleteById);

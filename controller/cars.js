@@ -43,6 +43,25 @@ exports.fetchAll = async (req, res, next) => {
   }
 };
 
+exports.fetchById = async (req, res, next) => {
+  try {
+    const carId = req.params.id;
+
+    const car = await Car.findById(carId);
+    if (!car) {
+      const error = new Error('Car Not Found');
+      error.status = 422;
+      throw error;
+    }
+    res.status(200).json({ message: 'Car Fetched', car });
+  } catch (err) {
+    if (!err.status) {
+      err.status = 500;
+    }
+    next(err);
+  }
+};
+
 exports.update = async (req, res, next) => {
   try {
     const carId = req.params.id;
