@@ -75,7 +75,7 @@ exports.update = async (req, res, next) => {
       error.status = 422;
       throw error;
     }
-    existingCar.name = carName;
+    existingCar.carName = carName;
     existingCar.segment = segment;
     existingCar.brand = brand;
 
